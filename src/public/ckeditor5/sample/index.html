@@ -1,0 +1,38 @@
+<!DOCTYPE html><!--
+	Copyright (c) 2014-2023, CKSource Holding sp. z o.o. All rights reserved.
+	This file is licensed under the terms of the MIT License (see LICENSE.md).
+-->
+
+<html lang="en" dir="ltr">
+	<head>
+		<link rel="stylesheet" type="text/css" href="styles.css">
+	</head>
+	<body data-editor="ClassicEditor" data-collaboration="false" data-revision-history="false">
+		<div class="centered">
+			<div class="row row-editor">
+				<div class="editor-container">
+					<div class="editor" onKey>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../build/ckeditor.js"></script>
+		<script src="script.js"></script>
+		<script>
+			window.addEventListener("load", function() {
+			// Mã JavaScript của bạn sẽ được thực thi sau khi trang và tất cả tài nguyên đã tải xong
+			// Đặt mã JavaScript của bạn ở đây
+			console.log(123);
+			document.addEventListener("keyup", function(event) {
+			if (event.key === "Enter") {
+				// Xử lý sự kiện sau khi Enter đã được nhấn và thả
+				console.log("Enter key released");
+				// Thêm code xử lý ở đây
+			}
+			});
+			const myInputElement = document.querySelector('.editor').value;
+			console.log(myInputElement)
+			});
+		</script>
+	</body>
+</html>
