@@ -1,7 +1,6 @@
 class BlogController {
     index (req, res) {
-        console.log(123);
-        res.send('ok').status(200);
+        res.render('indexBlog');
     }
 
     create(req, res) {
@@ -9,7 +8,7 @@ class BlogController {
     }
 
     edit(req,res) {
-        
+
     }
 }
 

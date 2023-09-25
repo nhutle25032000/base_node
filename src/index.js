@@ -14,6 +14,10 @@ app.use(express.json());
 app.engine('hbs', engine({
     extname: '.hbs', 
     // defaultLayout: false
+    partialsDir: [
+        // Thư mục chứa các partial views
+        __dirname + '/resource/views/layouts/partials',
+    ],
 }));
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'resource/views'))
