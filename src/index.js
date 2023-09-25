@@ -6,10 +6,10 @@ const routes = require('./router');
 const app = express();
 const port = 3000;
 
-app.use(routes);
-
- app.use(express.static(path.join(__dirname, 'public')));
-app.use(morgan('combined'));
+app.use(express.static(path.join(__dirname, 'public')));
+// app.use(morgan('combined'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.engine('hbs', engine({
     extname: '.hbs', 
@@ -18,17 +18,6 @@ app.engine('hbs', engine({
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'resource/views'))
 
-app.get('/home', (req, res) => { 
-    res.render('home')
- });
-
-app.get('/new', (req, res) => { 
-    res.render('new')
-});
-
-app.get('/form', (req, res) => {
-    console.log(123);
-    res.render('form');
-})
+app.use(routes);
 
 app.listen(port, () => console.log(`listen port: ${port}`))
