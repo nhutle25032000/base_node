@@ -4,7 +4,7 @@ class BlogController {
     }
 
     create(req, res) {
-        res.send('create').status(200);
+        res.render('createBlog');
     }
 
     edit(req,res) {

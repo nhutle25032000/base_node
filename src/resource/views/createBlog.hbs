@@ -1,38 +1,54 @@
-
-<main class="main-content border-radius-lg ">
-    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
-
-    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
-      data-scroll="true">
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
+<div class="row">
+    <div class="col-12 position-relative z-index-2">
         <form action="">
-            <textarea name="" id="editor" cols="30" rows="10"></textarea>
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <label class="text-danger">*</label>
+                <input type="text" class="form-control border border-dark" id="title">
+            </div>
+            <div class="mb-3">
+                <label for="subject" class="form-label">Subject</label>
+                <label class="text-danger">*</label>
+                <select class="form-select border border-dark" aria-label="Default select example">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="editor" class="form-label">Content</label>
+                <label class="text-danger">*</label>
+                <textarea name="content" id="editor" cols="30" rows="10"></textarea>
+            </div>
         </form>
-    </nav>
-    {{!-- <script src="./ck.js"></script> --}}
-    <script src="./node_modules/@ckeditor/ckeditor5-upload"></script>
-    <script type="module">
-        //import { SimpleUploadAdapter } from '/@ckeditor/ckeditor5-upload';
-        ClassicEditor
-            .create( document.querySelector( '#editor' ) 
-            //{
-               // plugins: [ SimpleUploadAdapter, /* ... */ ],
-                //toolbar: [ /* ... */ ],
-                //simpleUpload: {
-                    // The URL that the images are uploaded to.
-                    //uploadUrl: 'http://example.com',
+    </div>
+</div>
+{{!-- <script src="./ck.js"></script> --}}
+<script src="./node_modules/@ckeditor/ckeditor5-upload"></script>
+<script type="module">
+    //import { SimpleUploadAdapter } from '/@ckeditor/ckeditor5-upload';
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) 
+        //{
+            // plugins: [ SimpleUploadAdapter, /* ... */ ],
+            //toolbar: [ /* ... */ ],
+            //simpleUpload: {
+                // The URL that the images are uploaded to.
+                //uploadUrl: 'http://example.com',
 
-                    // Enable the XMLHttpRequest.withCredentials property.
-                    // withCredentials: true,
+                // Enable the XMLHttpRequest.withCredentials property.
+                // withCredentials: true,
 
-                    // Headers sent along with the XMLHttpRequest to the upload server.
-                    //headers: {
-                      //  'X-CSRF-TOKEN': 'CSRF-Token',
-                        //Authorization: 'Bearer <JSON Web Token>'
-                    //}
-               // }
-             )
-            .catch( error => {
-                console.error( error );
-            } );
-    </script>
-</main>
+                // Headers sent along with the XMLHttpRequest to the upload server.
+                //headers: {
+                    //  'X-CSRF-TOKEN': 'CSRF-Token',
+                    //Authorization: 'Bearer <JSON Web Token>'
+                //}
+            // }
+            )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
