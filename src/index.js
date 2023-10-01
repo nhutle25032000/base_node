@@ -1,4 +1,5 @@
 const path = require('path')
+const createError = require('http-errors');
 const express =  require('express');
 const morgan = require('morgan');
 const { engine } = require('express-handlebars');
@@ -27,5 +28,17 @@ app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'resource/views'))
 
 app.use(routes);
+
+app.use(function (req, res, next) {
+    next(createError.NotFound('This route is not exist.'))
+});
+
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500)
+        .json({
+            status: err.status || 500,
+            message: err.message
+        })
+});
 
 app.listen(port, () => console.log(`listen port: ${port}`))
