@@ -1,5 +1,9 @@
+const Post = require('../../models/post');
+
 class BlogController {
-    index (req, res) {
+    async index (req, res) {
+        const posts = await Post.find({}).exec();
+        console.log(posts);
         res.render('indexBlog');
     }
 
