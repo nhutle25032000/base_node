@@ -1,6 +1,7 @@
 const createError = require('http-errors');
 const { userValidation } = require('../helper/validation');
 const User = require('../models/user');
+const { signAccessToken, verifyRefreshToken, signRefreshToken } = require('../helper/jwt_service')
 
 class AuthController {
     async register(req, res, next) {
@@ -35,6 +36,26 @@ class AuthController {
         }
     }
 
+    async refreshToken(req, res, next) {
+        try {
+            const {refreshToken} = req.body;
+            if (!refreshToken) {
+                throw createError.BadRequest();
+            }
+
+            const {userId} = verifyRefreshToken(refreshToken);
+            const accessToken = signAccessToken({ user_id: userId });
+            const refToken = signRefreshToken({ user_id: userId });
+
+            res.json({
+                access_token: accessToken,
+                refresh_token: refToken,
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
     async login(req, res, next) {
         try {
             const {email, password} = req.body;
@@ -53,7 +74,13 @@ class AuthController {
                 throw createError.Unauthorized();
             }
     
-            return res.send(user);
+            const token = await signAccessToken({
+                user_id: user._id 
+            })
+
+            return res.send({
+                access_token: token
+            });
         } catch (error) {
            next(createError(error)); 
         }
