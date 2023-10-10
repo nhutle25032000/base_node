@@ -4,6 +4,14 @@ const User = require('../models/user');
 const { signAccessToken, verifyRefreshToken, signRefreshToken } = require('../helper/jwt_service')
 
 class AuthController {
+    async signIn(req, res, next) {
+        res.render('signIn', {layout: false});
+    }
+
+    async signUp(req, res, next) {
+        res.render('signUp', {layout: false});
+    }
+
     async register(req, res, next) {
         try {
             const {email, password} = req.body;

@@ -1,5 +1,6 @@
 const JWT = require('jsonwebtoken');
 const createError = require('http-errors');
+require('dotenv').config();
 
 const signAccessToken = async (params) => {
     return new Promise((resolve, reject) => {
