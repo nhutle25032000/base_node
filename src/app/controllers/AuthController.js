@@ -14,7 +14,7 @@ class AuthController {
 
     async register(req, res, next) {
         try {
-            const {email, password} = req.body;
+            const {email, password, role} = req.body;
             const { error } = userValidation(req.body);
             if ( error ) {
                 throw createError(error.details[0].message);
@@ -30,7 +30,8 @@ class AuthController {
 
             const user = new User({
                 email,
-                password
+                password,
+                role
             });
 
             const userSaved = await user.save();

@@ -4,6 +4,7 @@ const userValidation = (data) => {
     const userSchema = Joi.object({
         email: Joi.string().email().lowercase().required(),
         password: Joi.string().min(4).max(32).required(),
+        role: Joi.number(),
     });
 
     return userSchema.validate(data);
