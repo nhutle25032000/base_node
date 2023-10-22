@@ -3,8 +3,11 @@ const Post = require('../../models/post');
 class BlogController {
     async index (req, res) {
         const posts = await Post.find({}).exec();
-        console.log(posts);
-        res.render('indexBlog');
+
+        res.json({
+            status: 200,
+            data: posts
+        });
     }
 
     create(req, res) {
