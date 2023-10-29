@@ -1,5 +1,6 @@
 const path = require('path')
 const createError = require('http-errors');
+const cors = require('cors');
 const express =  require('express');
 const morgan = require('morgan');
 const { engine } = require('express-handlebars');
@@ -15,6 +16,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use(morgan('combined'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
 app.engine('hbs', engine({
     extname: '.hbs', 
