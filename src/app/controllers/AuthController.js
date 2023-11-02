@@ -52,8 +52,8 @@ class AuthController {
                 throw createError.BadRequest();
             }
 
-            const {userId} = verifyRefreshToken(refreshToken);
-            const accessToken = signAccessToken({ user_id: userId });
+            const {userId, role} = verifyRefreshToken(refreshToken);
+            const accessToken = signAccessToken({ user_id: userId, role: role });
             const refToken = signRefreshToken({ user_id: userId });
 
             res.json({
@@ -84,7 +84,8 @@ class AuthController {
             }
     
             const token = await signAccessToken({
-                user_id: user._id 
+                user_id: user._id,
+                role: user.role,
             })
 
             return res.send({

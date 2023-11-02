@@ -1,11 +1,13 @@
 const JWT = require('jsonwebtoken');
 const createError = require('http-errors');
+const userRole = require('../enum/userRole');
 require('dotenv').config();
 
 const signAccessToken = async (params) => {
     return new Promise((resolve, reject) => {
         const payload = {
-            user_id: params.user_id
+            user_id: params.user_id,
+            role: params.role,
         }
         const secret = process.env.SECRET_TOKEN;
         const option = {
@@ -76,9 +78,18 @@ const verifyRefreshToken = async (refreshToken) => {
     })
 }
 
+const checkBloggerRole = async (req, res, next) => {
+    if (req.payload.role = userRole.blogger) {
+        return next();
+    }
+
+    return next(createError.Unauthorized());
+}
+
 module.exports = {
     signAccessToken,
     verifyAccessToken,
     verifyRefreshToken,
     signRefreshToken,
+    checkBloggerRole,
 }

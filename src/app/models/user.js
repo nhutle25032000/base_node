@@ -2,6 +2,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 
+const Post = new Schema({
+    title: { type: String },
+    content: { type: String },
+    subject: { type: String },
+    createdAt: { type: Date, default: Date.now },
+}, {
+    timestamps: true
+});
+
 const UserSchema = new Schema({
     email: {
         type: String,
@@ -18,6 +27,11 @@ const UserSchema = new Schema({
     },
     role: {
         type: Number
+    },
+    createdAt: { type: Date, default: Date.now },
+    posts: {
+        type: Post,
+        ref: 'post'
     }
 });
 

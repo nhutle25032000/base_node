@@ -10,6 +10,17 @@ const userValidation = (data) => {
     return userSchema.validate(data);
 }
 
+const createPost = (data) => {
+    const postSchema = Joi.object({
+        title: Joi.string().required(),
+        content: Joi.string().required(),
+        subject: Joi.string().required(),
+    });
+
+    return postSchema.validate(data);
+}
+
 module.exports = {
     userValidation,
+    createPost,
 }
