@@ -22,11 +22,6 @@ const Post = new Schema({
         type: String,
         required: true,
     },
-    createdAt: { 
-        type: Date,
-        default: Date.now,
-        required: true,
-    },
 }, {
     timestamps: true
 });
@@ -48,11 +43,13 @@ const UserSchema = new Schema({
     role: {
         type: Number
     },
-    createdAt: { type: Date, default: Date.now },
-    posts: {
+    posts: [{
         type: Post,
         ref: 'post'
-    }
+    },
+    {
+        timestamps: true
+    }]
 });
 
 UserSchema.pre('save', async function (next) {

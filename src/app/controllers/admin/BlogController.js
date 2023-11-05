@@ -50,14 +50,20 @@ class BlogController {
                 throw createError(error.details[0].message);
             }
 
-            User.findOneAndUpdate({ _id: req.payload.user_id }, {
-            $push: { posts: {
+            let user = await User.findById(req.payload.user_id).exec()
+
+            if(user.posts == undefined) {
+                console.log(123);
+                user.posts = [];
+            }
+            user.posts.push({
                 _id: new ObjectId(),
                 title: params.title,
                 content: params.content,
                 subject: params.subject,
                 slug: params.title.replace(' ', '_'),
-            }}}).exec()
+            });
+            user.save();
 
             res.json({
                 status: 200,
