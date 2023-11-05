@@ -3,10 +3,30 @@ const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 
 const Post = new Schema({
-    title: { type: String },
-    content: { type: String },
-    subject: { type: String },
-    createdAt: { type: Date, default: Date.now },
+    title: { 
+        type: String,
+        unique: true,
+        required: true,
+    },
+    slug: {
+        type: String,
+        index: true,
+        unique: true,
+        required: true,
+    },
+    content: { 
+        type: String,
+        required: true,
+    },
+    subject: { 
+        type: String,
+        required: true,
+    },
+    createdAt: { 
+        type: Date,
+        default: Date.now,
+        required: true,
+    },
 }, {
     timestamps: true
 });
