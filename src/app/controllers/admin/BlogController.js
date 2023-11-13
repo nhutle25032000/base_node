@@ -6,11 +6,7 @@ const User = require('../../models/user');
 const UserRole = require('../../enum/userRole')
 
 class BlogController {
-    async index (req, res) {
-        const posts = await Post.find({})
-            .select('subject _id title')
-            .exec();
-
+    async index (req, res, next) {
         res.json({
             status: 200,
             data: posts
@@ -50,23 +46,26 @@ class BlogController {
                 throw createError(error.details[0].message);
             }
 
-            let user = await User.findById(req.payload.user_id).exec()
+            let slug = params.title.replace(/\s+/g, '_')
+            let exists = await Post.findOne({ slug }).exec();
 
-            if(user.posts == undefined) {
-                console.log(123);
-                user.posts = [];
+            if (!!exists) {
+                return next(createError[403]('Slug already exists !!!'))
             }
-            user.posts.push({
-                _id: new ObjectId(),
-                title: params.title,
-                content: params.content,
-                subject: params.subject,
-                slug: params.title.replace(' ', '_'),
-            });
-            user.save();
+
+            let post = new Post({
+                'title': params.title,
+                'slug': params.title.replace(/\s+/g, '_'),
+                'content': params.content,
+                'subject': params.subject,
+                'forUser': req.payload.user_id,
+            })
+
+            post.save();
 
             res.json({
                 status: 200,
+                post
             });
         } catch (error) {
             next(createError(error));

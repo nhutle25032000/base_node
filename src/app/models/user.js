@@ -2,29 +2,29 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 
-const Post = new Schema({
-    title: { 
-        type: String,
-        unique: true,
-        required: true,
-    },
-    slug: {
-        type: String,
-        index: true,
-        unique: true,
-        required: true,
-    },
-    content: { 
-        type: String,
-        required: true,
-    },
-    subject: { 
-        type: String,
-        required: true,
-    },
-}, {
-    timestamps: true
-});
+// const Post = new Schema({
+//     title: { 
+//         type: String,
+//         unique: true,
+//         required: true,
+//     },
+//     slug: {
+//         type: String,
+//         index: true,
+//         unique: true,
+//         required: true,
+//     },
+//     content: { 
+//         type: String,
+//         required: true,
+//     },
+//     subject: { 
+//         type: String,
+//         required: true,
+//     },
+// }, {
+//     timestamps: true
+// });
 
 const UserSchema = new Schema({
     email: {
@@ -43,13 +43,13 @@ const UserSchema = new Schema({
     role: {
         type: Number
     },
-    posts: [{
-        type: Post,
-        ref: 'post'
-    },
-    {
-        timestamps: true
-    }]
+    // posts: [{
+    //     type: Post,
+    //     ref: 'post'
+    // },
+    // {
+    //     timestamps: true
+    // }]
 });
 
 UserSchema.pre('save', async function (next) {
