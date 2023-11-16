@@ -79,11 +79,19 @@ const verifyRefreshToken = async (refreshToken) => {
 }
 
 const checkBloggerRole = async (req, res, next) => {
-    if (req.payload.role = userRole.blogger) {
+    if (req.payload.role == userRole.blogger) {
         return next();
     }
 
     return next(createError.Unauthorized());
+}
+
+const checkAdminRole = async (req, res, next) => {
+    if (req.payload.role == userRole.admin) {
+        return next();
+    }
+
+    return next(createError.Unauthorized())
 }
 
 module.exports = {
@@ -92,4 +100,5 @@ module.exports = {
     verifyRefreshToken,
     signRefreshToken,
     checkBloggerRole,
+    checkAdminRole,
 }

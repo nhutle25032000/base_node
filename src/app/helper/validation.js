@@ -1,5 +1,20 @@
 const Joi = require('joi');
+const PostStatus = require('../enum/postStatus')
 
+/** admin */
+const updatePostStatusValidate = (data) => {
+    const schema = Joi.object({
+        status: Joi.string()
+            .valid(
+                PostStatus.pending.toString(), 
+                PostStatus.posted.toString(), 
+                PostStatus.block.toString()
+            ).required()
+    });
+    return schema.validate(data);
+}
+
+/** blogger */
 const userValidation = (data) => {
     const userSchema = Joi.object({
         email: Joi.string().email().lowercase().required(),
@@ -23,4 +38,5 @@ const createPost = (data) => {
 module.exports = {
     userValidation,
     createPost,
+    updatePostStatusValidate,
 }
