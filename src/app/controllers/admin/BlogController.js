@@ -5,22 +5,21 @@ const Post = require("../../models/post");
 const User = require("../../models/user");
 const PostStatus = require("../../enum/postStatus");
 const { updatePostStatusValidate } = require('../../helper/validation')
+const BaseController = require('./BaseController')
 
 class BlogController {
   async index(req, res, next) {
     const pageNumber = req.query.page ?? 1;
-    const pageSize = 10;
+		const pageSize = 10
     const skipAmount = (pageNumber - 1) * pageSize;
+		const documentTotal = await Post.countDocuments();
     const posts = await Post.find({})
       .skip(skipAmount)
       .limit(pageSize)
       .sort({ createdAt: -1 })
       .exec();
 
-    res.json({
-      status: 200,
-      data: posts,
-    });
+    res.json(await BaseController.responseSuccess(posts, pageSize, documentTotal, pageNumber));
   }
 
   async getPostBySlug(req, res, next) {
