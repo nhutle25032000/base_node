@@ -1,7 +1,9 @@
 const createError = require('http-errors');
 const { userValidation } = require('../helper/validation');
 const User = require('../models/user');
-const { signAccessToken, verifyRefreshToken, signRefreshToken } = require('../helper/jwt_service')
+const userStatus = require('../enum/userStatus')
+const { signAccessToken, verifyRefreshToken, signRefreshToken } = require('../helper/jwt_service');
+const userRole = require('../enum/userRole');
 
 class AuthController {
     async signIn(req, res, next) {
@@ -28,11 +30,16 @@ class AuthController {
                 throw createError.Conflict(`${email} is ready been registed !!!`);
             }
 
-            const user = new User({
+            let userInfo = {
                 email,
                 password,
                 role
-            });
+            }
+            if (role == userRole.blogger) {
+                userInfo.posting_rights = false
+            }
+
+            const user = new User(userInfo);
 
             const userSaved = await user.save();
 
@@ -53,7 +60,7 @@ class AuthController {
             }
 
             const {userId, role} = verifyRefreshToken(refreshToken);
-            const accessToken = signAccessToken({ user_id: userId, role: role });
+            const accessToken = signAccessToken({ user_id: userId, role: role, status: status });
             const refToken = signRefreshToken({ user_id: userId });
 
             res.json({
@@ -76,6 +83,10 @@ class AuthController {
             const user = await User.findOne({email}).exec();
             if (!user) {
                 throw createError.NotFound('User not registed.');
+            }
+
+            if (user.status != userStatus.active) {
+                return next(createError[401]('Account status is invalid !!!'))
             }
     
             const isValid = await user.isCheckPassword(password);

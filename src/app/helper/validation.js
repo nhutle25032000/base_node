@@ -35,8 +35,26 @@ const createPost = (data) => {
     return postSchema.validate(data);
 }
 
+const updateUserStatus = (data) => {
+    const updateUserStatus = Joi.object({
+        status: Joi.string().valid('0', '1').required(),
+    });
+
+    return updateUserStatus.validate(data);
+}
+
+const updatePostingRights = (data) => {
+    const updatePostingRights = Joi.object({
+        posting_rights: Joi.string().valid('0', '1').required(),
+    });
+
+    return updatePostingRights.validate(data);
+}
+
 module.exports = {
     userValidation,
     createPost,
     updatePostStatusValidate,
+    updateUserStatus,
+    updatePostingRights,
 }

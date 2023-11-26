@@ -1,9 +1,5 @@
-const { ObjectId } = require("mongodb");
-const { createPost } = require("../../helper/validation");
 const createError = require("http-errors");
 const Post = require("../../models/post");
-const User = require("../../models/user");
-const PostStatus = require("../../enum/postStatus");
 const { updatePostStatusValidate } = require('../../helper/validation')
 const BaseController = require('./BaseController')
 
